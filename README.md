@@ -1,7 +1,6 @@
-
 # Fullstack Note App
 
-This is a full-stack note-taking application built with the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, view, and manage their notes.
+This is a full-stack note-taking application built with the (SQLite, Express, React, Node.js). It allows users to create, view, and manage their notes.
 
 ## Features
 
@@ -56,10 +55,10 @@ To get the project running locally, follow these steps:
    cd ../client
    npm run dev
    ```
+
 ## API Endpoints
 
 The following API endpoints are available:
 
 - `GET /api/notes`: Get all notes
 - `POST /post`: Add a new note
-
