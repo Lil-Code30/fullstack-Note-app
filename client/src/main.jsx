@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { NotesProvider } from "./contexts/NotesContexts.jsx";
+import { NotesProvider } from "./contexts/NotesContext.jsx";
 import { CategoriesProvider } from "./contexts/CategoriesContext.jsx";
 import App from "./App.jsx";
 

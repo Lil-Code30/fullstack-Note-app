@@ -1,20 +1,39 @@
 import { dbQuery, dbAdd } from "../db/dbQuery.js";
 
 // controller to get all the notes in db
-export async function getAllNotes(req, res) {
+export async function getNotes(req, res) {
   try {
     let sql = `SELECT * FROM notes`;
-    let sql2 = `SELECT * FROM categories`;
+
     const notes = await dbQuery(sql);
-    const categories = await dbQuery(sql2);
-    res.json({ notes, categories });
+
+    res.json(notes);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch notes" });
+  }
+}
+
+// controller to get note by id in db
+export async function getNoteById(req, res) {
+  const { id } = req.params;
+
+  try {
+    let sql = `SELECT * FROM notes WHERE id = ?`;
+
+    const result = await dbQuery(sql, [id]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    res.json(result[0]);
   } catch {
     res.status(500).json({ error: "Failed to fetch notes" });
   }
 }
 
 //add a new note in db
-export async function addNewNote(req, res) {
+export async function createNote(req, res) {
   try {
     if (req.body) {
       const { title, category, content } = req.body;
