@@ -1,24 +1,32 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { fetchAllNotes } from "../api";
+import { fetchCategories } from "../api";
 
-const categoriesContext = createContext();
+const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
   const [categories, setGategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getAllCategories = async () => {
-      const { categories } = await fetchAllNotes();
-      setGategories(categories);
+      try {
+        const data = await fetchCategories();
+        setGategories(data);
+      } catch (error) {
+        console.error("Erreur lors du fetch des categories :", error);
+        setGategories([]);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getAllCategories();
   }, []);
   return (
-    <categoriesContext.Provider value={{ categories }}>
+    <CategoriesContext.Provider value={{ categories, isLoading }}>
       {children}
-    </categoriesContext.Provider>
+    </CategoriesContext.Provider>
   );
 };
 
-export const useCategories = () => useContext(categoriesContext);
+export const useCategories = () => useContext(CategoriesContext);
